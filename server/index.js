@@ -17,6 +17,9 @@ app.get('/api/:id', (req, res) => {
     }
   })
 });
+
+
+
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.listen(port, () => {
   console.log(`aircarousel Listening on port: ${port}`);
