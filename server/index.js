@@ -8,7 +8,7 @@ const port = 1337;
 app.use(express.json());
 
 // GET request
-app.get('/api/:id', (req, res) => {
+app.get('/listing/:id', (req, res) => {
   console.log(req.params.id);
   db.getId(req.params.id, (err, data) => {
     if(err) {
@@ -23,18 +23,24 @@ app.get('/api/:id', (req, res) => {
 });
 
 // POST request
-app.post('/post', (req, res) => {
+app.post('/newlisting', (req, res) => {
   db.post();
+  //create new listing with address
+  //comes with array/object of image urls
 });
 
 // UPDATE request
-app.put('/update/:id', (req, res) => {
+app.put('/listing/:id/photo/:photoId', (req, res) => {
   db.putId();
+  //Go to select photo id
+  //update link to different url
 });
 
 // DELETE request
-app.delete('/delete/:id', (req, res) => {
+app.delete('/listing/:id/photo/:photoId', (req, res) => {
   db.deleteId();
+  //go to select photo id
+  //delete that photo
 });
 
 

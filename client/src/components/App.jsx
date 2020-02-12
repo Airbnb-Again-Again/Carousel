@@ -24,7 +24,7 @@ export default class App extends React.Component {
     // request images for a random accomodationId
     axios({
       method: 'GET',
-      url: `/api/${Math.ceil(Math.random() * 100)}`,
+      url: `/listing/${Math.ceil(Math.random() * 100)}`,
     })
       .then((res) => {
         console.log(res.data);
