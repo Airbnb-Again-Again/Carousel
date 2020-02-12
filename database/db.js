@@ -47,7 +47,7 @@ module.exports.post = function(address, photos, cb) {
 // UPDATE request
 module.exports.putId = function(photoId, photoURL, cb) {
   result = {};
-  db.query(`UPDATE images SET ${photoURL} WHERE id=${photoId};`, (err, data) => {
+  db.query(`UPDATE images SET image=${photoURL} WHERE id=${photoId};`, (err, data) => {
     if (err) {
       cb(err);
     } else {
@@ -58,7 +58,25 @@ module.exports.putId = function(photoId, photoURL, cb) {
 };
 
 // DELETE request
-module.exports.deleteId = function(photoId, cb) {
+module.exports.deleteId = function(id, cb) {
+  result = {};
+  db.query(`DELETE FROM accommodations WHERE id=${id};`, (err, data) => {
+    if (err) {
+      cb(err);
+    } else {
+      db.query(`DELETE FROM images WHERE accommodationid=${id};`, (err, data) => {
+        if (err) {
+          cb(err);
+        } else {
+          console.log(`deleted listing ${id}`);
+          cb(data);
+        }
+      });
+    }
+  });
+};
+
+module.exports.deletePhotoId = function(photoId, cb) {
   result = {};
   db.query(`DELETE FROM images WHERE id=${photoId};`, (err, data) => {
     if (err) {
@@ -69,3 +87,11 @@ module.exports.deleteId = function(photoId, cb) {
     }
   });
 };
+
+// photourl: https://abc.jpg
+// address: 123 abc st Poopyville
+
+// post: INSERT INTO accommodations(name) VALUES('123 abc st Poopyville');
+// post: INSERT INTO images(image, accommodationId) VALUES('https://abc.jpg', 101);
+// put: UPDATE images SET image='https://abc.jpg' WHERE id=1179;
+// delete: DELETE FROM images WHERE id=1178;

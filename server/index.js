@@ -36,7 +36,7 @@ app.post('/newlisting', (req, res) => {
       res.writeHead(500);
       res.end('Could not list house');
     } else {
-      res.writeHead(200);
+      res.writeHead(201);
       res.end(JSON.stringify(data));
     }
   });
@@ -55,20 +55,37 @@ app.put('/listing/:id/photo/:photoId', (req, res) => {
       res.writeHead(500);
       res.end('Could not UPDATE picture');
     } else {
-      res.writeHead(200);
+      res.writeHead(201);
       res.end(JSON.stringify(data));
     }
   });
 });
 
 // DELETE request
+app.delete('/listing/:id', (req, res) => {
+  // go to select photo id
+  // delete that photo
+  const photoId = req.params.id;
+
+  db.deleteId(id, (err, data) => {
+    if(err) {
+      console.log(err);
+      res.writeHead(500);
+      res.end('Could not DELETE listing');
+    } else {
+      res.writeHead(200);
+      res.end(JSON.stringify(data));
+    }
+  });
+});
+
 app.delete('/listing/:id/photo/:photoId', (req, res) => {
   // go to select photo id
   // delete that photo
   const photoId = req.params.photoId;
   const photoURL = req.data.photoURL;
 
-  db.deleteId(photoId, photoURL, (err, data) => {
+  db.deletePhotoId(photoId, photoURL, (err, data) => {
     if(err) {
       console.log(err);
       res.writeHead(500);
