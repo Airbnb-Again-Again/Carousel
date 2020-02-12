@@ -24,14 +24,15 @@ module.exports.getId = function(id, cb) {
 };
 
 // POST request
-module.exports.post = function(cb) {
+module.exports.post = function(address, photos, cb) {
   result = {};
-  db.query(`SELECT * FROM images where accommodationId=${id};`, (err, data) => {
+  db.query(`INSERT INTO accommodations(name) VALUES(${address});`, (err, data) => {
     if (err) {
       cb(err);
     } else {
-      result.imgArr = data;
-      db.query(`SELECT name FROM accommodations where id=${id};`, (err, data) => {
+      id = data.id; //data.id????
+      db.query(`INSERT INTO images(image, accommodationId) 
+      VALUES${photos.forEach(photo => `(${photo}, ${id})`)};`, (err, data) => {
         if (err) {
           cb(err);
         } else {
@@ -57,21 +58,14 @@ module.exports.putId = function(photoId, photoURL, cb) {
 };
 
 // DELETE request
-module.exports.deleteId = function(id, cb) {
+module.exports.deleteId = function(photoId, cb) {
   result = {};
-  db.query(`SELECT * FROM images where accommodationId=${id};`, (err, data) => {
+  db.query(`DELETE FROM images WHERE id=${photoId};`, (err, data) => {
     if (err) {
       cb(err);
     } else {
-      result.imgArr = data;
-      db.query(`SELECT name FROM accommodations where id=${id};`, (err, data) => {
-        if (err) {
-          cb(err);
-        } else {
-          result.name = data[0].name;
-          cb(null, result);
-        }
-      });
+      console.log(`deleted ${photoID}`);
+      cb(data);
     }
   });
 };

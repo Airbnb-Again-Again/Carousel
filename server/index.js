@@ -24,23 +24,60 @@ app.get('/listing/:id', (req, res) => {
 
 // POST request
 app.post('/newlisting', (req, res) => {
-  db.post();
-  //create new listing with address
-  //comes with array/object of image urls
+  // create new listing with address
+  // comes with array/object of image urls
+  const address = req.data.address;
+  // array of links
+  const photos = req.data.photos;
+
+  db.post(address, photos, (err, data) => {
+    if(err) {
+      console.log(err);
+      res.writeHead(500);
+      res.end('Could not list house');
+    } else {
+      res.writeHead(200);
+      res.end(JSON.stringify(data));
+    }
+  });
 });
 
 // UPDATE request
 app.put('/listing/:id/photo/:photoId', (req, res) => {
-  db.putId();
-  //Go to select photo id
-  //update link to different url
+  // Go to select photo id
+  // update link to different url
+  const photoId = req.params.photoId;
+  const photoURL = req.data.photoURL;
+
+  db.putId(photoId, photoURL, (err, data) => {
+    if(err) {
+      console.log(err);
+      res.writeHead(500);
+      res.end('Could not UPDATE picture');
+    } else {
+      res.writeHead(200);
+      res.end(JSON.stringify(data));
+    }
+  });
 });
 
 // DELETE request
 app.delete('/listing/:id/photo/:photoId', (req, res) => {
-  db.deleteId();
-  //go to select photo id
-  //delete that photo
+  // go to select photo id
+  // delete that photo
+  const photoId = req.params.photoId;
+  const photoURL = req.data.photoURL;
+
+  db.deleteId(photoId, photoURL, (err, data) => {
+    if(err) {
+      console.log(err);
+      res.writeHead(500);
+      res.end('Could not DELETE picture');
+    } else {
+      res.writeHead(200);
+      res.end(JSON.stringify(data));
+    }
+  });
 });
 
 
