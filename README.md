@@ -7,7 +7,7 @@ CRUD
 
 CREATE/POST: `/newlisting` -- create new listing
 
-READ/GET: `/listing/:id` -- get pictures for listing
+READ/GET: `/listing/:id/photos` -- get pictures for listing
 
 UDPATE/PUT: `/listing/:id/photo/:photoId` -- update specific picture
 
