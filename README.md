@@ -1,10 +1,12 @@
-Air Carousel Kevin Lonergan
+SDC
+
+Air Carousel Kevin Lonergan ft. 
+Carousel-again-again Alex Kim
 
 Installation guide:
-in /database follow directions in config.example.js
+`CREATE/POST :   '/newlisting'  - `
+`READ/GET :      '/listing/:id'`
+`UDPATE/PUT :    '/listing/:id/photo/:photoId'`
+`DELETE/DELETE : '/listing/:id'`
+`DELETE/DELETE : '/listing/:id/photo/:photoId'`
 
-run in terminal:
-npm install
-## change npm run seed in package.json to include your mysql login info
-npm run seed ##make sure you are running mysql@5.7 first
-npm run server
