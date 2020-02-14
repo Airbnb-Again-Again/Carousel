@@ -18,7 +18,7 @@ request body:
 response: 'Successfully Created Listing!'  
 ```
 
-READ/GET: `/listing/:id/photos` -- get pictures for listing  
+READ/GET: `/listing/:listingId/photos` -- get pictures for listing  
 ```
 request body: 
 {
@@ -32,7 +32,7 @@ response:
 }
 ```
 
-UDPATE/PATCH: `/listing/:id/photo/:photoId` -- update specific picture 
+UDPATE/PATCH: `user/:userId/listing/:listingId/photo/:photoId` -- update specific picture 
 ```
 request body:  
 {
@@ -44,7 +44,7 @@ request body:
 response: 'Successfully Updated Photo!'  
 ```
 
-DELETE/DELETE: `/listing/:id` -- delete a listing  
+DELETE/DELETE: `user/:userId/listing/:listingId` -- delete a listing  
 ```
 request body:  
 {
@@ -55,7 +55,7 @@ request body:
 response: 'Successfully Deleted Listing!'
 ```
 
-DELETE/DELETE: `/listing/:id/photo/:photoId` -- delete a specific photo  
+DELETE/DELETE: `user/:userId/listing/:listingId/photo/:photoId` -- delete a specific photo  
 ```
 request body:  
 {
