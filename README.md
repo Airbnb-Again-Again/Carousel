@@ -7,7 +7,7 @@ CRUD
 
 CREATE/POST: `/user/:userId/newlisting` -- create new listing  
 request body:  
-{  
+{
    user: INT NOT NULL,  
    title: String NOT NULL,  
    photos: [ { url: String NOT NULL, description: String } ],  
