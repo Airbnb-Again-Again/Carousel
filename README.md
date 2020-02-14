@@ -10,14 +10,12 @@ request body:
 {  
   user: INT NOT NULL,  
   title: String NOT NULL,  
-  photos: [  
-    { url: String NOT NULL, description: String }  
-  ],  
+  photos: [ { url: String NOT NULL, description: String } ],  
 }  
 response: 'Successfully Created Listing!'  
 
-READ/GET: `/listing/:id/photos` -- get pictures for listing
-request body: 
+READ/GET: `/listing/:id/photos` -- get pictures for listing  
+request body:  
 {
   listingId: INT,
 }
