@@ -17,34 +17,44 @@ request body:
 response: 'Successfully Created Listing!'  
 
 READ/GET: `/listing/:id/photos` -- get pictures for listing  
-request body:  
+request body: 
+```
 {
   listingId: INT,
 }
+```
 response: 
+```
 {
   photos: [photo1, photo2, photo3, ...],
 }
+```
 
-UDPATE/PATCH: `/listing/:id/photo/:photoId` -- update specific picture
-request body:
+UDPATE/PATCH: `/listing/:id/photo/:photoId` -- update specific picture  
+request body:  
+```
 {
   photoId: INT,
   newurl: String,
 }
-response: 'Successfully Updated Photo!'
+```
+response: 'Successfully Updated Photo!'  
 
 DELETE/DELETE: `/listing/:id` -- delete a listing
-request body:
+request body:  
+```
 {
   listingId: INT,
 }
+```
 response: 'Successfully Deleted Listing!'
 
-DELETE/DELETE: `/listing/:id/photo/:photoId` -- delete a specific photo
-request body:
+DELETE/DELETE: `/listing/:id/photo/:photoId` -- delete a specific photo  
+request body:  
+```
 {
   photoId: INT,
 }
+```
 response: 'Successfully Deleted Photo!'
 
