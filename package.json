@@ -7,7 +7,9 @@
     "test": "jest",
     "seed": "mysql -u root <database/schema.sql & node database/seed.js",
     "react-dev": "webpack -d --watch",
-    "server": "node server/index.js"
+    "server": "node server/index.js",
+    "pg-seed": "node database/pgSeed.js",
+    "cass-seed": "node database/cassSeed.js"
   },
   "repository": {
     "type": "git",
