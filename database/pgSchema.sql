@@ -1,0 +1,31 @@
+DROP DATABASE IF EXISTS carousel;
+
+CREATE DATABASE carousel;
+
+USE carousel;
+
+CREATE TABLE users (
+id INT NOT NULL AUTO_INCREMENT,
+user VARCHAR(256),
+
+PRIMARY KEY (id),
+);
+
+CREATE TABLE listings (
+id INT NOT NULL AUTO_INCREMENT,
+title VARCHAR(256) NOT NULL,
+userId INT NOT NULL,
+
+PRIMARY KEY (id),
+FOREIGN KEY (userId) REFERENCES users (id),
+);
+
+CREATE TABLE photos (
+id INT NOT NULL AUTO_INCREMENT,
+url VARCHAR(256) NOT NULL,
+description VARCHAR(256),
+listingId INT NOT NULL,
+
+PRIMARY KEY (id),
+FOREIGN KEY (listingId) REFERENCES listings (id),
+);

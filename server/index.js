@@ -8,7 +8,7 @@ const port = 1337;
 app.use(express.json());
 
 // GET request
-app.get('/listing/:id', (req, res) => {
+app.get('/listing/:listingId/photos', (req, res) => {
   console.log(req.params.id);
   db.getId(req.params.id, (err, data) => {
     if(err) {
@@ -23,7 +23,7 @@ app.get('/listing/:id', (req, res) => {
 });
 
 // POST request
-app.post('/newlisting', (req, res) => {
+app.post('/user/:userId/newlisting', (req, res) => {
   // create new listing with address
   // comes with array/object of image urls
   const address = req.data.address;
@@ -43,7 +43,7 @@ app.post('/newlisting', (req, res) => {
 });
 
 // UPDATE request
-app.put('/listing/:id/photo/:photoId', (req, res) => {
+app.patch('user/:userId/listing/:listingId/photo/:photoId', (req, res) => {
   // Go to select photo id
   // update link to different url
   const photoId = req.params.photoId;
@@ -62,7 +62,7 @@ app.put('/listing/:id/photo/:photoId', (req, res) => {
 });
 
 // DELETE request
-app.delete('/listing/:id', (req, res) => {
+app.delete('user/:userId/listing/:listingId', (req, res) => {
   // go to select photo id
   // delete that photo
   const photoId = req.params.id;
@@ -79,7 +79,7 @@ app.delete('/listing/:id', (req, res) => {
   });
 });
 
-app.delete('/listing/:id/photo/:photoId', (req, res) => {
+app.delete('user/:userId/listing/:listingId/photo/:photoId', (req, res) => {
   // go to select photo id
   // delete that photo
   const photoId = req.params.photoId;

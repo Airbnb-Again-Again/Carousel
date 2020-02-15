@@ -4,3 +4,6 @@ package-lock.json
 client/dist/react-dom.development.js
 client/dist/react.development.js
 
+database/pgconfig.js
+database/cassconfig.js
+
