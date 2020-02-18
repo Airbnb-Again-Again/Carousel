@@ -1,65 +1,123 @@
 // PostgreSQL seed file
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-const createArrayCsvWriter = require('csv-writer').createArrayCsvWriter;
+const fs = require('fs');
 var faker = require('faker');
 
-const users = 700;
-const listings = 10000;
-const photos = 50000;
+const users = 5000000;
+const listings = 10000000;
+const photos = 100000000;
 
 // Random number Generator
 const randomizer = (max) => Math.floor(Math.random() * Math.floor(max));
 
 
-// User seed
-const userWriter = createArrayCsvWriter({
-  path: '/Users/alexanderkim/Desktop/HackReactor/SDC-data/user_data.csv',
-  header: ['id', 'user']
-});
+// // User seed
+// const writeUsers = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/user_data.csv');
+// writeUsers.write('id,user\n', 'utf8');
 
-const userRecords = [];
+// function writeTenMillionUsers(writer, encoding, callback) {
+//   let i = users;
+//   let id = 0;
+//   function write() {
+//     let ok = true;
+//     do {
+//       i -= 1;
+//       id += 1;
+//       const user = faker.internet.userName();
+//       const data = `${id},${user}\n`;
+//       if (i === 0) {
+//         writer.write(data, encoding, callback);
+//       } else {
+//         // see if we should continue, or wait
+//         // don't pass the callback, because we're not done yet.
+//         ok = writer.write(data, encoding);
+//       }
+//     } while (i > 0 && ok);
+//     if (i > 0) {
+//       // had to stop early!
+//       // write some more once it drains
+//       writer.once('drain', write);
+//     }
+//   }
+//   write()
+// }
 
-for (let i = 0; i < users; i++) {
-  userRecords.push([ i, faker.internet.userName() ]);
-}
-
-userWriter.writeRecords(userRecords)
-  .then(() => {
-    console.log('...User Done');
-  });
+// writeTenMillionUsers(writeUsers, 'utf-8', () => {
+//   console.log('...User Done');
+//   writeUsers.end();
+// });
 
 
-// Listing seed
-const listingWriter = createArrayCsvWriter({
-  path: '/Users/alexanderkim/Desktop/HackReactor/SDC-data/listing_data.csv',
-  header: ['id', 'title', 'userId']
-});
+// // Listing seed
+// const writeListings = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/listing_data.csv');
+// writeListings.write('id,title,userId\n', 'utf8');
 
-const listingRecords = [];
+// function writeTenMillionListings(writer, encoding, callback) {
+//   let i = listings;
+//   let id = 0;
+//   function write() {
+//     let ok = true;
+//     do {
+//       i -= 1;
+//       id += 1;
+//       const title = faker.company.catchPhrase();
+//       const userId = randomizer(users);
+//       const data = `${id},${title},${userId}\n`;
+//       if (i === 0) {
+//         writer.write(data, encoding, callback);
+//       } else {
+//         // see if we should continue, or wait
+//         // don't pass the callback, because we're not done yet.
+//         ok = writer.write(data, encoding);
+//       }
+//     } while (i > 0 && ok);
+//     if (i > 0) {
+//       // had to stop early!
+//       // write some more once it drains
+//       writer.once('drain', write);
+//     }
+//   }
+//   write()
+// }
 
-for (let i = 0; i < listings; i++) {
-  listingRecords.push([ i, faker.company.catchPhrase(), randomizer(700) ]);
-}
-
-listingWriter.writeRecords(listingRecords)
-  .then(() => {
-    console.log('...Listing Done');
-  });
-
+// writeTenMillionListings(writeListings, 'utf-8', () => {
+//   console.log('...Listing Done');
+//   writeListings.end();
+// });
 
 // Photos seed
-const photoWriter = createArrayCsvWriter({
-  path: '/Users/alexanderkim/Desktop/HackReactor/SDC-data/photo_data.csv',
-  header: ['id', 'url', 'description', 'listingId']
-});
+const writePhotos = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/photos_data.csv');
+writePhotos.write('id,url,description, listingId\n', 'utf8');
 
-const photoRecords = [];
-
-for (let i = 0; i < photos; i++) {
-  photoRecords.push([ i, 'https://loremflickr.com/640/480/house', faker.lorem.sentence(), randomizer(listings) ]);
+function writeTenMillionPhotos(writer, encoding, callback) {
+  let i = photos;
+  let id = 0;
+  function write() {
+    let ok = true;
+    do {
+      i -= 1;
+      id += 1;
+      const url = 'https://loremflickr.com/640/480/house';
+      const description = faker.lorem.sentence();
+      const listingId = randomizer(listings);
+      const data = `${id},${url},${description},${listingId}\n`;
+      if (i === 0) {
+        writer.write(data, encoding, callback);
+      } else {
+        // see if we should continue, or wait
+        // don't pass the callback, because we're not done yet.
+        ok = writer.write(data, encoding);
+      }
+    } while (i > 0 && ok);
+    if (i > 0) {
+      // had to stop early!
+      // write some more once it drains
+      writer.once('drain', write);
+    }
+  }
+  write()
 }
 
-photoWriter.writeRecords(photoRecords)
-  .then(() => {
-    console.log('...Photos Done');
-  });
+writeTenMillionPhotos(writePhotos, 'utf-8', () => {
+  console.log('...Photos Done');
+  writePhotos.end();
+});
