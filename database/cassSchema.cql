@@ -1,0 +1,22 @@
+DROP KEYSPACE IF EXISTS carousel;
+
+CREATE KEYSPACE carousel 
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}
+AND durable_writes = 'true';
+
+USE carousel;
+
+CREATE TABLE photos
+(
+  listingId bigint,
+  title varchar,
+  user_name varchar,
+  userId bigint,
+  photoId varchar,
+  photo_url varchar,
+  caption varchar,
+  PRIMARY KEY(userId, listingId)
+);
+
+COPY carousel.photos (listingId,title,user_name,userId,photoId,photo_url,caption)
+FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/cass_data.csv' WITH DELIMITER=',' AND HEADER=TRUE;
