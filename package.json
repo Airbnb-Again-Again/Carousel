@@ -10,7 +10,7 @@
     "server": "node server/index.js",
     "pg-seed": "node --max_old_space_size=8000 database/pgSeed.js",
     "pg-schema": "psql postgres <database/pgSchema.sql",
-    "cass-seed": "node database/cassSeed.js"
+    "cass-seed": "node --max_old_space_size=8000 database/cassSeed.js"
   },
   "repository": {
     "type": "git",
