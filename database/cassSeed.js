@@ -6,7 +6,11 @@ let username = faker.internet.userName();
 const listings = 10000000;
 
 // Random number Generator
-const randomizer = (max) => Math.floor(Math.random() * Math.floor(max));
+const randomizer = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+}
 
 // Cass seed
 const writeCass = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/cass_data.csv');
@@ -15,25 +19,25 @@ writeCass.write('listingId,title,user,userId,photoId,url,description\n', 'utf8')
 function writeTenMillionCass(writer, encoding, callback) {
   let i = listings;
   let id = 0;
-  let userChange = 2;
 
   function write() {
     let ok = true;
     do {
       i -= 1;
       id += 1;
+      let userChange = 2;
 
       if (i % userChange === 0) {
         userid += 1;
         username = faker.internet.userName();
-        userChange = randomizer(5);
+        userChange = randomizer(1, 6);
       }
 
       if(i % 500000 === 0) {
         console.log(i);
       }
 
-      for (let j = 0; j < randomizer(20); j++) {
+      for (let j = 0; j < randomizer(1, 20); j++) {
         const listingId = id;
         const title = faker.company.catchPhrase();
         const user = username;
