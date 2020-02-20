@@ -10,13 +10,14 @@ CREATE TABLE photos
 (
   listingId bigint,
   title varchar,
-  user_name varchar,
+  user varchar,
   userId bigint,
   photoId varchar,
-  photo_url varchar,
+  photo varchar,
   caption varchar,
-  PRIMARY KEY(userId, listingId)
+  PRIMARY KEY((userId), listingId, photoId)
 );
 
-COPY carousel.photos (listingId,title,user_name,userId,photoId,photo_url,caption)
+
+COPY carousel.photos (listingId,title,user,userId,photoId,photo,caption)
 FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/cass_data.csv' WITH DELIMITER=',' AND HEADER=TRUE;

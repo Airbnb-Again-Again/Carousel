@@ -3,7 +3,8 @@ var faker = require('faker');
 
 let userid = 1;
 let username = faker.internet.userName();
-const listings = 10000000;
+const listings = 10000;
+let count = 0;
 
 // Random number Generator
 const randomizer = (min, max) => {
@@ -13,7 +14,7 @@ const randomizer = (min, max) => {
 }
 
 // Cass seed
-const writeCass = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/cass_data.csv');
+const writeCass = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/cassDUMMY_data.csv');
 writeCass.write('listingId,title,user,userId,photoId,url,description\n', 'utf8');
 
 function writeTenMillionCass(writer, encoding, callback) {
@@ -42,10 +43,11 @@ function writeTenMillionCass(writer, encoding, callback) {
         const title = faker.company.catchPhrase();
         const user = username;
         const userId = userid;
-        const photoId = `${id}-${j}`;
+        const photoId = count;
         const url = 'https://loremflickr.com/640/480/house';
         const description = faker.lorem.sentence();
         const data = `${listingId},${title},${user},${userId},${photoId},${url},${description}\n`;
+        count++;
         if (i === 0) {
           writer.write(data, encoding, callback);
         } else {
