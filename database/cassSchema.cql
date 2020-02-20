@@ -6,18 +6,15 @@ AND durable_writes = 'true';
 
 USE carousel;
 
-CREATE TABLE photos
+CREATE TABLE photosmap
 (
   listingId bigint,
   title varchar,
   user varchar,
   userId bigint,
-  photoId varchar,
-  photo varchar,
-  caption varchar,
-  PRIMARY KEY((userId), listingId, photoId)
+  photos map<int,text>,
+  PRIMARY KEY((userId), listingId)
 );
 
-
-COPY carousel.photos (listingId,title,user,userId,photoId,photo,caption)
-FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/cass_data.csv' WITH DELIMITER=',' AND HEADER=TRUE;
+COPY carousel.photosmap (listingId,title,user,userId,photos)
+FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/cassMap_data.csv' WITH DELIMITER='|' AND HEADER=TRUE;
