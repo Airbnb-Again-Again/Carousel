@@ -1,7 +1,7 @@
 const fs = require('fs');
 var faker = require('faker');
 
-const listings = 10000;
+const listings = 10000000;
 
 // Random number Generator
 const randomizer = (min, max) => {
