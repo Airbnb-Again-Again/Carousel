@@ -1,45 +1,35 @@
-const mysql = require('mysql');
-const mysqlConfig = require('./config.js');
+const cassandra = require('cassandra-driver');
 
-const db = mysql.createConnection(mysqlConfig);
+const db = new cassandra.Client({ 
+  contactPoints: ['localhost'],
+  localDataCenter: 'datacenter1',
+  keyspace: 'carousel'
+});
+
+// Connect to db
+db.connect();;
 
 // GET request
 module.exports.getId = function(id, cb) {
-  result = {};
-  db.query(`SELECT * FROM images WHERE accommodationId=${id};`, (err, data) => {
+  const userId = id.userId;
+  const listingId = id.listingId;
+  db.execute(`SELECT * FROM photos WHERE userId=${userId} AND listingId=${listingId};`, (err, data) => {
     if (err) {
       cb(err);
     } else {
-      result.imgArr = data;
-      db.query(`SELECT name FROM accommodations WHERE id=${id};`, (err, data) => {
-        if (err) {
-          cb(err);
-        } else {
-          result.name = data[0].name;
-          cb(null, result);
-        }
-      });
+      cb(null, data.rows);
     }
   });
 };
 
 // POST request
-module.exports.post = function(address, photos, cb) {
-  result = {};
-  db.query(`INSERT INTO accommodations(name) VALUES(${address});`, (err, data) => {
+module.exports.post = function(listingId, userId, body, cb) {
+  db.execute(`INSERT INTO photos(userid, listingid, photos, title, user) VALUES(${userId}, ${listingId}, ${body.photos}, '${body.title}', '${body.user}');`, (err, data) => {
     if (err) {
       cb(err);
     } else {
-      id = data.id; //data.id????
-      db.query(`INSERT INTO images(image, accommodationId) 
-      VALUES${photos.forEach(photo => `(${photo}, ${id})`)};`, (err, data) => {
-        if (err) {
-          cb(err);
-        } else {
-          result.name = data[0].name;
-          cb(null, result);
-        }
-      });
+      console.log('QUERY POST', data);
+      cb(null, data);
     }
   });
 };

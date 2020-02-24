@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Modal from './Modal.jsx';
 import FrontImages from './FrontImages.jsx';
+import faker from 'faker';
 
 const NameTitle = styled.h1`
   color: #606060;
@@ -22,15 +23,34 @@ export default class App extends React.Component {
       name: '',
     };
     // request images for a random accomodationId
-    axios({
-      method: 'GET',
-      url: `/listing/${Math.ceil(Math.random() * 100)}`,
-    })
+    const userId = 500000;
+    const listingId = 'f3ddf2be-0e43-4ef9-956a-0027793d5c52';
+    axios.get(`/user?userId=${userId}&listingId=${listingId}`)
       .then((res) => {
-        console.log(res.data);
-        this.setState({ data: res.data.imgArr, name: res.data.name });
+        // console.log(res.data[0].title);
+        const photos = [];
+        for(let key in res.data[0].photos){
+          photos.push(res.data[0].photos[key].split(',')[0]);
+        }
+        this.setState({ data: photos, name: res.data[0].title });
       })
       .catch((err) => { console.log(err); });
+
+    const postUserId = 5000000;
+    const photos = `{0: 'abc@google.com, I love hippos', 2: 'def@google.com, I love giraf'}`;
+    const title = faker.company.catchPhrase();
+    const user = faker.internet.userName();
+    axios.post(`/user?userId=${postUserId}`, {
+      photos: photos,
+      title: title, 
+      user: user,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     this.showModal = this.showModal.bind(this);
     this.handleArrowClick = this.handleArrowClick.bind(this);

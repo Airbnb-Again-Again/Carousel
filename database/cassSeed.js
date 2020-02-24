@@ -1,5 +1,6 @@
 const fs = require('fs');
 var faker = require('faker');
+const Uuid = require('cassandra-driver').types.Uuid;
 
 const listings = 10000000;
 
@@ -11,7 +12,7 @@ const randomizer = (min, max) => {
 }
 
 // Cass seed
-const writeCass = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/cassMap_data.csv');
+const writeCass = fs.createWriteStream('/Users/alexanderkim/Desktop/HackReactor/SDC-data/cassUuid_data.csv');
 writeCass.write('listingId|title|user|userId|photos\n', 'utf8');
 
 function writeTenMillionCass(writer, encoding, callback) {
@@ -37,7 +38,7 @@ function writeTenMillionCass(writer, encoding, callback) {
         console.log(i);
       }
 
-      
+      let listingId = Uuid.random();
       let title = faker.company.catchPhrase();
       let user = username;
       let userId = userid;
@@ -49,7 +50,7 @@ function writeTenMillionCass(writer, encoding, callback) {
         photos.push(`'${j}':'${url}, ${description}'`);
       }
       let joined = photos.join(',');
-      const data = `${id}|${title}|${user}|${userId}|{${joined}}\n`;
+      const data = `${listingId}|${title}|${user}|${userId}|{${joined}}\n`;
       photos = [];
       if (i === 0) {
         writer.write(data, encoding, callback);
