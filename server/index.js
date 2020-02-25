@@ -1,15 +1,20 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const db = require('../database/db');
 const path = require('path');
 const port = 1337;
+const morgan = require('morgan');
 const Uuid = require('cassandra-driver').types.Uuid;
 
 // json request
 app.use(express.json());
 
+app.use(morgan());
+
 // GET request
 app.get('/user', (req, res) => {
+  console.log(req.query);
   const query = req.query;
   db.getId(query, (err, data) => {
     if(err) {
@@ -30,6 +35,7 @@ app.post('/user', (req, res) => {
   const listingId = Uuid.random();
   const userId = req.query;
   const body = req.body;
+  console.log('BODDDDDY', body);
 
   db.post(listingId, userId.userId, body, (err, data) => {
     if(err) {
