@@ -8,8 +8,10 @@
     "seed": "mysql -u root <database/schema.sql & node database/seed.js",
     "react-dev": "webpack -d --watch",
     "server": "node server/index.js",
-    "pg-seed": "node database/pgSeed.js",
-    "cass-seed": "node database/cassSeed.js"
+    "nodemon": "nodemon server/index.js",
+    "pg-seed": "node --max_old_space_size=8000 database/pgSeed.js",
+    "pg-schema": "psql postgres <database/pgSchema.sql",
+    "cass-seed": "node --max_old_space_size=8000 database/cassSeed.js"
   },
   "repository": {
     "type": "git",
@@ -25,10 +27,12 @@
   "dependencies": {
     "axios": "^0.19.2",
     "babel-preset-react": "^6.24.1",
-    "csv-writer": "^1.6.0",
+    "cassandra-driver": "^4.4.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
+    "morgan": "^1.9.1",
     "mysql": "^2.18.1",
+    "newrelic": "^6.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "styled-components": "^5.0.0"

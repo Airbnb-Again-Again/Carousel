@@ -2,30 +2,32 @@ DROP DATABASE IF EXISTS carousel;
 
 CREATE DATABASE carousel;
 
-USE carousel;
+\c carousel;
 
 CREATE TABLE users (
-id INT NOT NULL AUTO_INCREMENT,
-user VARCHAR(256),
-
-PRIMARY KEY (id),
+id INTEGER NOT NULL PRIMARY KEY,
+user_name VARCHAR(256)
 );
 
 CREATE TABLE listings (
-id INT NOT NULL AUTO_INCREMENT,
+id INTEGER NOT NULL PRIMARY KEY,
 title VARCHAR(256) NOT NULL,
-userId INT NOT NULL,
-
-PRIMARY KEY (id),
-FOREIGN KEY (userId) REFERENCES users (id),
+userId INTEGER NOT NULL
 );
 
 CREATE TABLE photos (
-id INT NOT NULL AUTO_INCREMENT,
-url VARCHAR(256) NOT NULL,
-description VARCHAR(256),
-listingId INT NOT NULL,
-
-PRIMARY KEY (id),
-FOREIGN KEY (listingId) REFERENCES listings (id),
+id INTEGER NOT NULL PRIMARY KEY,
+photo_url VARCHAR(256) NOT NULL,
+caption VARCHAR(256),
+listingId INTEGER NOT NULL
 );
+
+-- Copy CSV file into tables
+COPY users(id,user_name)
+FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/user_data.csv' DELIMITER ',' CSV HEADER;
+
+COPY listings(id,title,userId)
+FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/listing_data.csv' DELIMITER ',' CSV HEADER;
+
+COPY photos(id,photo_url,caption,listingId)
+FROM '/Users/alexanderkim/Desktop/HackReactor/SDC-data/photos_data.csv' DELIMITER ',' CSV HEADER;

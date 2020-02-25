@@ -1,16 +1,22 @@
+require('newrelic');
 const express = require('express');
 const app = express();
 const db = require('../database/db');
 const path = require('path');
 const port = 1337;
+const morgan = require('morgan');
+const Uuid = require('cassandra-driver').types.Uuid;
 
 // json request
 app.use(express.json());
 
+app.use(morgan());
+
 // GET request
-app.get('/listing/:listingId/photos', (req, res) => {
-  console.log(req.params.id);
-  db.getId(req.params.id, (err, data) => {
+app.get('/user', (req, res) => {
+  console.log(req.query);
+  const query = req.query;
+  db.getId(query, (err, data) => {
     if(err) {
       console.log(err);
       res.writeHead(500);
@@ -23,21 +29,22 @@ app.get('/listing/:listingId/photos', (req, res) => {
 });
 
 // POST request
-app.post('/user/:userId/newlisting', (req, res) => {
+app.post('/user', (req, res) => {
   // create new listing with address
   // comes with array/object of image urls
-  const address = req.data.address;
-  // array of links
-  const photos = req.data.photos;
+  const listingId = Uuid.random();
+  const userId = req.query;
+  const body = req.body;
+  console.log('BODDDDDY', body);
 
-  db.post(address, photos, (err, data) => {
+  db.post(listingId, userId.userId, body, (err, data) => {
     if(err) {
       console.log(err);
       res.writeHead(500);
       res.end('Could not list house');
     } else {
       res.writeHead(201);
-      res.end(JSON.stringify(data));
+      res.end(JSON.stringify(listingId));
     }
   });
 });
