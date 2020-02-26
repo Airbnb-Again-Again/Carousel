@@ -25,7 +25,7 @@ export default class App extends React.Component {
     // request images for a random accomodationId
     const userId = 500000;
     const listingId = 'f3ddf2be-0e43-4ef9-956a-0027793d5c52';
-    axios.get(`/user?userId=${userId}&listingId=${listingId}`)
+    axios.get(`http://localhost:1337/user?userId=${userId}&listingId=${listingId}`)
       .then((res) => {
         // console.log(res.data[0].title);
         const photos = [];
@@ -40,7 +40,8 @@ export default class App extends React.Component {
     const photos = `{0: 'abc@google.com, I love hippos', 2: 'def@google.com, I love giraf'}`;
     const title = faker.company.catchPhrase();
     const user = faker.internet.userName();
-    axios.post(`/user?userId=${postUserId}`, {
+    
+    axios.post(`http://localhost:1337/user?userId=${postUserId}`, {
       photos: photos,
       title: title, 
       user: user,

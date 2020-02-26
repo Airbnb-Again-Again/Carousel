@@ -5,6 +5,7 @@ const db = require('../database/db');
 const path = require('path');
 const port = 1337;
 const morgan = require('morgan');
+const cors = require('cors');
 const Uuid = require('cassandra-driver').types.Uuid;
 
 // json request
@@ -12,9 +13,15 @@ app.use(express.json());
 
 app.use(morgan());
 
+app.use(cors());
+
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/bundle.js'));
+});
+
 // GET request
 app.get('/user', (req, res) => {
-  console.log(req.query);
+  console.log('I GOT IT');
   const query = req.query;
   db.getId(query, (err, data) => {
     if(err) {
@@ -35,7 +42,6 @@ app.post('/user', (req, res) => {
   const listingId = Uuid.random();
   const userId = req.query;
   const body = req.body;
-  console.log('BODDDDDY', body);
 
   db.post(listingId, userId.userId, body, (err, data) => {
     if(err) {
