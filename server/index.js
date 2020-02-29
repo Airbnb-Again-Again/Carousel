@@ -7,11 +7,14 @@ const port = 1337;
 const morgan = require('morgan');
 const cors = require('cors');
 const Uuid = require('cassandra-driver').types.Uuid;
+const compression = require('compression');
 
 // json request
 app.use(express.json());
 
-app.use(morgan());
+//app.use(morgan());
+
+app.use(compression());
 
 app.use(cors());
 
@@ -19,9 +22,13 @@ app.get('/bundle.js', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/bundle.js'));
 });
 
+app.get('/loaderio-850e3818375af158d99f953bb6147564.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, '/loaderio-850e3818375af158d99f953bb6147564.txt')); 
+});
+
 // GET request
 app.get('/user', (req, res) => {
-  console.log('I GOT IT');
+  //console.log('I GOT IT');
   const query = req.query;
   db.getId(query, (err, data) => {
     if(err) {

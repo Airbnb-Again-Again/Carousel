@@ -1,13 +1,19 @@
 const cassandra = require('cassandra-driver');
 
 const db = new cassandra.Client({ 
-  contactPoints: ['34.212.200.181'],
+  contactPoints: ['54.185.86.46'],
   localDataCenter: 'datacenter1',
   keyspace: 'carousel'
 });
 
 // Connect to db
-db.connect();;
+db.connect(err => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('connected to DATABASE');
+  }
+});;
 
 // GET request
 module.exports.getId = function(id, cb) {
