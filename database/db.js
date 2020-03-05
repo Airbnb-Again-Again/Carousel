@@ -1,7 +1,7 @@
 const cassandra = require('cassandra-driver');
 
 const db = new cassandra.Client({ 
-  contactPoints: ['54.185.86.46'],
+  contactPoints: ['54.244.217.214'],
   localDataCenter: 'datacenter1',
   keyspace: 'carousel'
 });
